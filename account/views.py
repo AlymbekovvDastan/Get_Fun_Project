@@ -6,7 +6,9 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from .forms import LoginForm
 from django.contrib.auth.decorators import login_required
-
+from django.views.generic.edit import FormView
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
 
 def user_login(request):
 	if request.method == 'POST':
@@ -26,20 +28,31 @@ def user_login(request):
 		form = LoginForm()
 	return render(request, 'account/login.html', {'form': form})
 
+class MyRegisterFormView(FormView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy("login")
+    template_name = "account/register.html"
+
+    def form_valid(self, form):
+        form.save()
+        return super(MyRegisterFormView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        return super(MyRegisterFormView, self).form_invalid(form)
 
 
-def register(request):
-	if request.method == 'POST':
-		user_form = UserRegistrationForm(request.POST)
-		if user_form.is_valid():
-			# Создаем нового пользователя, но пока не сохраняем в базу данных.
-			new_user = user_form.save(commit=False)
-			# Задаем пользователю зашифрованный пароль.
-			new_user.set_password(user_form.cleaned_data['password'])
+# def register(request):
+# 	if request.method == 'POST':
+# 		user_form = UserRegistrationForm(request.POST)
+# 		if user_form.is_valid():
+# 			# Создаем нового пользователя, но пока не сохраняем в базу данных.
+# 			new_user = user_form.save(commit=False)
+# 			# Задаем пользователю зашифрованный пароль.
+# 			new_user.set_password(user_form.cleaned_data['password'])
 
-			# Сохраняем пользователя в базе данных.
-			new_user.save()
-			return render(request, 'account/register_done.html', {'new_user': new_user})
-	else:
-		user_form = UserRegistrationForm()
-	return render(request,'account/register.html',{'user_form': user_form})
+# 			# Сохраняем пользователя в базе данных.
+# 			new_user.save()
+# 			return reverse(request, 'account/register_done.html', {'new_user': new_user})
+# 	else:
+# 		user_form = UserRegistrationForm()
+# 	return render(request,'account/register.html',{'user_form': user_form})
