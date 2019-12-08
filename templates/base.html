@@ -57,9 +57,17 @@
 										<div>info.fiksiki@gmail.com</div>
 									</li>
 								</ul>
+                                {% if user.is_authenticated %}
+
 								<div class="top_bar_login ml-auto">
+									<div class="login_button"><a href="{% url 'logout' %}">Log Out</a></div>
+								</div>
+
+                                {% else %}
+                                <div class="top_bar_login ml-auto">
 									<div class="login_button"><a href="{% url 'login' %}">Register or Login</a></div>
 								</div>
+                                {% endif %}
 							</div>
 						</div>
 					</div>

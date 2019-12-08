@@ -2,4 +2,8 @@
 Pipfile
 Pipfile.lock
 env
+<<<<<<< HEAD
 db.sqlite3
+=======
+venv
+>>>>>>> abe29308eb7e5f10eab44673fe19a5ae50e85091
