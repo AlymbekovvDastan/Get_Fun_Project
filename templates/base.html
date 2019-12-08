@@ -57,9 +57,17 @@
 										<div>info.fiksiki@gmail.com</div>
 									</li>
 								</ul>
+                                {% if user.is_authenticated %}
+
 								<div class="top_bar_login ml-auto">
+									<div class="login_button"><a href="{% url 'logout' %}">Log Out</a></div>
+								</div>
+
+                                {% else %}
+                                <div class="top_bar_login ml-auto">
 									<div class="login_button"><a href="{% url 'login' %}">Register or Login</a></div>
 								</div>
+                                {% endif %}
 							</div>
 						</div>
 					</div>
@@ -78,7 +86,7 @@
                                     <img width="50px" height="50px" src="../static/images/627146-200.png" alt=""><div class="logo_text">Get<span>Fun</span></div>
 								</a>
 							</div>
-							< class="main_nav_contaner ml-auto">
+							<nav class="main_nav_contaner ml-auto">
 								<ul class="main_nav">
                                     {% block navbar %}
                                     {% endblock navbar %}

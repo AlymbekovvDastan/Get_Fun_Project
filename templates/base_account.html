@@ -8,7 +8,8 @@
 <body>
 	<div class="dastan">
 		<div id="header">
-			<span class="logo">Bookmarks</span>
+
+			<a href="{% url 'index' %}"><span class="logo">GetFun</span></a>
 			{% if request.user.is_authenticated %}
 			
 			<span class="user">
@@ -24,9 +25,8 @@
 		<span class="user">
 				{% block content %}
 				{% endblock %}
-			</div>
-		</span>
-	</div>
+        </span>
+	    </div>
 
 </body>
 </html>
