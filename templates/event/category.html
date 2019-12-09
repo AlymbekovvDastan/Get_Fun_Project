@@ -55,7 +55,7 @@
                                     </li>
                                 </ul>
                                 <div class="top_bar_login ml-auto">
-                                    <div class="login_button"><a href="{% url 'login' %}">Register or Login</a></div>
+                                    <div class="login_button"><a href="{% url 'login' %}">Вход / Регистрация</a></div>
                                 </div>
                             </div>
                         </div>
@@ -72,16 +72,29 @@
                         <div class="header_content d-flex flex-row align-items-center justify-content-start">
                             <div class="logo_container">
                                 <a href="{% url 'index' %}">
-                                    <img width="50px" height="50px" src="../../static/images/627146-200.png" alt=""><div class="logo_text">Get<span>Fun</span></div>
+                                    <div class="logo_text">Get<span>Fun</span></div><img width="50px" height="50px" src="../../static/images/21348-200.png" alt="">
                                 </a>
                             </div>
                             <nav class="main_nav_contaner ml-auto">
+
+                                <form action="{% url 'date' %}" method="get">
+                                    {% csrf_token %}
+                                    <div class="input-group mb-3">
+                                        <input type="date" class="form-control" name="calendar" aria-describedby="button-addon2">
+                                        <div class="input-group-append">
+                                            <button class="earch_button btn btn-outline-secondary" type="submit" id="button-addon2">
+                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+
                                 <ul class="main_nav">
                                     {% block navbar %}
                                         {% include 'includes/category.html' %}
                                     {% endblock navbar %}
                                 </ul>
-                                <div class="search_button"><i class="fa fa-search" aria-hidden="true"></i></div>
+{#                                <div class="search_button"><i class="fa fa-search" aria-hidden="true"></i></div>#}
                             </nav>
 
                         </div>
@@ -153,6 +166,7 @@
     <div class="courses">
         <div class="container">
             <div class="row">
+            {% block content %}
                 {% for event in filtered_event %}
                     <div class="col-lg-6 course_col">
                         <div class="course">
@@ -173,8 +187,10 @@
                         </div>
                     </div>
                 {% endfor %}
+            {% endblock %}
             </div>
         </div>
+    </div>
 
         <footer class="footer">
             <div class="footer_background" style="background-image:url(images/footer_background.png)"></div>
@@ -255,7 +271,7 @@
                 </div>
             </div>
         </footer>
-    </div>
+</div>
 
 
     <script src="../../static/js/jquery-3.2.1.min.js"></script>

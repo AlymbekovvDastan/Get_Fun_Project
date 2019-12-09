@@ -4,7 +4,6 @@ from .models import *
 
 
 
-
 class EventList(ListView):
     model = Event
     template_name = 'event/index.html'
@@ -34,6 +33,29 @@ def filter_by_category(request, pk):
     return render(request, 'event/category.html', {
 
         'category': category,
+        'filtered_event': filtered_event,
+        'categories': categories
+    })
+
+
+def filter_by_tag(request, pk):
+    tag = Tag.objects.get(pk=pk)
+    filtered_event = Event.objects.filter(tags=tag)
+    categories = Category.objects.all()
+    return render(request, 'event/tag.html', {
+
+        'tag': tag,
+        'filtered_event': filtered_event,
+        'categories': categories
+    })
+
+def filter_by_date(request):
+
+    date = request.GET.get('calendar')
+    filtered_event = Event.objects.filter(date=date)
+    categories = Category.objects.all()
+    return render(request, 'event/date.html', {
+        'date': date,
         'filtered_event': filtered_event,
         'categories': categories
     })
